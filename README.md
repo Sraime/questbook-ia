@@ -35,6 +35,18 @@ git clone git@github.com:Sraime/questbook-ia.git
 Le script clone les deux depots produit a cote, puis expose les regles a la
 racine. Ouvrir ensuite `questbook/`, et non l'un des depots.
 
+Si macOS repond `permission denied`, c'est que le bit d'execution n'a pas suivi
+depuis un poste Windows, qui ne le gere pas :
+
+```bash
+chmod +x questbook-ia/scripts/bootstrap.sh              # debloquer ici
+git -C questbook-ia update-index --chmod=+x scripts/bootstrap.sh   # et pour les suivants
+```
+
+La seconde ligne se commite : sans elle, chaque nouveau poste refait la
+premiere. Meme reflexe pour tout `.sh` ajoute depuis Windows, ou
+`git ls-files -s scripts/` doit montrer `100755`.
+
 ## Pourquoi un lien a la racine
 
 Cursor ne documente le chargement des regles qu'a la racine du dossier ouvert.
@@ -59,10 +71,6 @@ Deux consequences pour cette disposition :
 | `.cursor/rules/environnements.mdc` | Les quatre etapes dev, test, staging, production et leur configuration. |
 | `.cursor/rules/fin-de-session.mdc` | Arreter proprement : le tableau, Docker, les simulateurs. |
 | `scripts/bootstrap.*` | Clone les depots produit et pose le lien des regles. |
-
-Un script destine a macOS se commite executable. Windows ne suit pas ce bit,
-donc `git ls-files -s scripts/` doit montrer `100755` sur les `.sh` ; sinon
-`git update-index --chmod=+x <fichier>`, une fois, avant de pousser.
 
 ## Ce qu'il ne contient pas
 
