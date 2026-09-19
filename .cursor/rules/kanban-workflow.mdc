@@ -1,0 +1,63 @@
+---
+description: Suivi du travail via le kanban GitHub du projet Questbook
+alwaysApply: true
+---
+
+# Suivi du travail
+
+Le tableau <https://github.com/users/Sraime/projects/1> est la seule source de
+verite sur le travail a faire. Pas de fichier de suivi a la racine.
+
+Les cartes sont de **vraies issues**, ouvertes dans `Sraime/questbook-app` ou
+`Sraime/questbook-back` selon le depot concerne, puis ajoutees au projet.
+
+## Ce que veut dire chaque colonne
+
+| Colonne | Ce que j'en fais |
+| --- | --- |
+| `Backlog` | Encore en reflexion. **Je ne demarre rien** dessus sans accord explicite de Robin. |
+| `Todo` | Prete, le developpement peut commencer. |
+| `In progress` | En cours d'implementation. Une seule a la fois autant que possible. |
+| `Blocked` | Une action manuelle de Robin est requise pour confirmer ou continuer. |
+| `Done` | Code fini, tests verts, doc a jour, pousse. Prete pour la prochaine release. |
+
+Deux consequences a retenir :
+
+- **`Done` ne veut pas dire livre.** Merger, deployer et publier la release
+  restent des gestes a part, decides par Robin.
+- **`Blocked` est ma sortie de secours.** Des que j'ai besoin de lui — une
+  console tierce, un test sur appareil, un identifiant, un arbitrage — je passe
+  la carte en `Blocked` et je le dis, au lieu d'attendre en silence.
+
+## Au debut de chaque session
+
+Lire le tableau. Reprendre les cartes `In progress`, puis rendre compte des
+`Blocked` et de ce qu'elles attendent.
+
+## Pendant le travail
+
+Deplacer la carte **au moment** ou son etat change, pas a la fin : une session
+peut s'interrompre et le tableau doit rester juste a froid.
+
+Un travail sans carte n'existe pas : en creer une avant de toucher au code.
+Ecrire dans la PR `Closes #n` pour lier les deux.
+
+## Commandes
+
+Le scope `project` est necessaire :
+`gh auth refresh -h github.com -s project`.
+
+```powershell
+gh project item-list 1 --owner Sraime --format json
+gh issue create --repo Sraime/questbook-app --title "..." --body-file <fichier>
+gh project item-add 1 --owner Sraime --url <url de l'issue>
+gh project item-edit --project-id PVT_kwHOALVndc4Bi4Ow `
+  --id <id de l'item> --field-id PVTSSF_lAHOALVndc4Bi4OwzhhuqRc `
+  --single-select-option-id <option ci-dessous>
+```
+
+Options de `Status` : `Backlog` = `f75ad846`, `Todo` = `6c5f1f94`,
+`In progress` = `47fc9ee4`, `Blocked` = `df73e18b`, `Done` = `98236657`.
+
+PowerShell ne gere pas les heredocs : passer les corps d'issue et les messages
+de commit par un fichier.
