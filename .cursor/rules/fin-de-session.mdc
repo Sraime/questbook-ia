@@ -1,0 +1,61 @@
+---
+description: Arreter proprement le travail, la trace comme les processus
+alwaysApply: true
+---
+
+# Arreter le travail
+
+Deux choses a ne pas laisser derriere soi : un tableau qui ment, et des
+processus qui mangent la machine.
+
+## La trace
+
+- Le tableau reflete l'etat reel. Une carte encore `In progress` alors que
+  plus personne ne travaille dessus doit repasser en `Todo` ou `Blocked`, en
+  disant ce qu'elle attend.
+- Les branches en cours sont poussees, meme inachevees.
+- Une regle modifiee est committee dans `questbook-ia`, sinon elle disparait
+  au prochain poste.
+
+## Le backend local
+
+Dans `questbook-back` :
+
+```bash
+docker compose -f docker-compose.dev.yml down
+```
+
+Le faire vraiment, et pas seulement fermer le terminal : le service PostgreSQL
+est declare `restart: unless-stopped`, donc un conteneur laisse en vie
+**redemarre tout seul** au lancement suivant de Docker, et continue de
+consommer de la memoire des semaines plus tard.
+
+`down` conserve les donnees, qui vivent dans le volume nomme `dev-db-data`.
+**Ne jamais ajouter `-v`** pour arreter : cela detruit la base locale.
+
+L'API elle-meme tourne sur la machine hote (`npm run dev`), un `Ctrl+C` suffit.
+
+## Simulateurs et emulateurs
+
+Ce sont les plus gros consommateurs, et les plus faciles a oublier : ils
+survivent a la fermeture de l'editeur.
+
+```bash
+# Flutter : « q » dans la console de flutter run
+
+# iOS (macOS) — l'app Simulator garde de la RAM meme sans appareil demarre
+xcrun simctl shutdown all
+osascript -e 'quit app "Simulator"'
+
+# Android
+adb devices                     # lister ce qui tourne
+adb -s emulator-5554 emu kill   # une ligne par emulateur
+```
+
+## Verifier qu'il ne reste rien
+
+```bash
+docker ps                          # aucune ligne
+xcrun simctl list devices booted   # aucun appareil (macOS)
+adb devices                        # liste vide
+```
