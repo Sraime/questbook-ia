@@ -56,7 +56,13 @@ Deux consequences pour cette disposition :
 | --- | --- |
 | `.cursor/rules/kanban-workflow.mdc` | Le tableau comme source de verite, et ce que veut dire chaque colonne. |
 | `.cursor/rules/questbook-ecosysteme.mdc` | La carte : depots, ou est la connaissance, workflow git, contraintes de poste. |
+| `.cursor/rules/environnements.mdc` | Les quatre etapes dev, test, staging, production et leur configuration. |
+| `.cursor/rules/fin-de-session.mdc` | Arreter proprement : le tableau, Docker, les simulateurs. |
 | `scripts/bootstrap.*` | Clone les depots produit et pose le lien des regles. |
+
+Un script destine a macOS se commite executable. Windows ne suit pas ce bit,
+donc `git ls-files -s scripts/` doit montrer `100755` sur les `.sh` ; sinon
+`git update-index --chmod=+x <fichier>`, une fois, avant de pousser.
 
 ## Ce qu'il ne contient pas
 
