@@ -1,0 +1,51 @@
+---
+description: Carte des depots Questbook, workflow git et contraintes de poste
+alwaysApply: true
+---
+
+# Questbook — carte de l'ecosysteme
+
+Un compagnon de jeu de role sur table : personnages, tables, sessions, mode
+meneur de jeu, catalogue de scenarios telechargeables hors ligne. La connexion
+Google est obligatoire, une table etant partagee entre joueurs.
+
+## Les depots, cote a cote
+
+| Dossier | Ce que c'est |
+| --- | --- |
+| `questbook-app` | L'application Flutter (Dart), Android et iOS. |
+| `questbook-back` | L'API Node/TypeScript + Prisma, derriere Caddy sur `https://questbook.nextuscorp.com`. |
+| `questbook-ia` | Ce contexte et les regles de l'agent. Pas de code produit. |
+
+## Ou chercher le detail
+
+Cette carte ne duplique rien : deux copies divergent toujours, et c'est celle
+qu'on lit qui a tort. Le detail vit au plus pres du code, et c'est la qu'il se
+met a jour.
+
+- `questbook-app/README.md` — la reference : architecture, moteur de regles,
+  synchronisation, hors ligne, signature Android et iOS, distribution aux
+  testeurs, publication sur les stores.
+- `questbook-app/CLAUDE.md` — conventions de code de l'app.
+- `questbook-back/README.md` — API, schema Prisma, deploiement.
+
+## Workflow git, identique dans les deux depots
+
+- `dev` est la branche de travail, `main` est reservee aux releases.
+- Une PR par carte, vers `dev`, avec `Closes #n` dans sa description.
+- Monter la version fait partie de la PR, pas de l'apres.
+- Merger `dev` vers `main` **declenche la distribution aux testeurs**. C'est un
+  geste de release, decide par Robin, jamais pris a l'initiative de l'agent.
+
+## Contraintes de poste
+
+- **Windows** : aucun build iOS possible. Ni `flutter run`, ni `flutter logs`,
+  ni Xcode sur un appareil Apple. Tout diagnostic iOS passe par la CI ou un Mac.
+- **macOS** : chaine complete. `flutter run -d <iphone>` rend lisibles les
+  traces que les builds Ad Hoc n'affichent pas.
+- La CI construit iOS sur un runner `macos-latest`, quel que soit le poste.
+
+## PowerShell
+
+Pas de heredocs : passer les corps d'issue, descriptions de PR et messages de
+commit par un fichier, jamais en ligne.

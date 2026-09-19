@@ -1,15 +1,2 @@
-# Les depots produit se clonent ici (voir scripts/bootstrap), ils ne sont pas
-# des sous-modules : chacun garde son historique et ses PR.
-/questbook-app/
-/questbook-back/
-
-# Configuration locale d'assistants, propre a la machine
-/.claude/
-
-# Brouillons : corps d'issues, messages de commit, sorties d'outils
+# Brouillons locaux : corps d'issues, messages de commit, sorties d'outils
 /.tmp-gm/
-/build/
-
-# Export de maquettes (~20 Mo d'images regenerables depuis l'outil de design).
-# Exclu pour garder ce depot leger : il porte du contexte, pas des binaires.
-/design-export/

@@ -1,40 +1,62 @@
 # questbook-ia
 
-Le dossier de travail de Questbook, et la memoire de l'assistant qui y
-travaille.
+Le contexte et les regles de l'assistant qui travaille sur Questbook.
 
-Il existe pour une raison simple : la facon de travailler sur Questbook — le
+Il existe pour une raison simple : la facon de travailler sur le projet — le
 tableau comme source de verite, le workflow git, ce que sont les depots et
 comment ils s'articulent — ne vivait nulle part. Elle etait dans un dossier
 local, sur une seule machine, que rien ne sauvegardait. Changer de poste la
 perdait.
 
+Ce depot se place **a cote** des depots produit, pas au-dessus :
+
+```
+questbook/            <- dossier de travail, a ouvrir dans l'editeur
+  questbook-app/
+  questbook-back/
+  questbook-ia/       <- ce depot
+  .cursor/rules       <- lien vers questbook-ia/.cursor/rules, cree au bootstrap
+```
+
 ## Installation sur un nouveau poste
 
 ```bash
-git clone git@github.com:Sraime/questbook-ia.git questbook
-cd questbook
-./scripts/bootstrap.sh        # macOS / Linux
+mkdir -p questbook && cd questbook
+git clone git@github.com:Sraime/questbook-ia.git
+./questbook-ia/scripts/bootstrap.sh          # macOS / Linux
 ```
 
 ```powershell
-git clone git@github.com:Sraime/questbook-ia.git questbook
-cd questbook
-.\scripts\bootstrap.ps1       # Windows
+New-Item -ItemType Directory questbook; Set-Location questbook
+git clone git@github.com:Sraime/questbook-ia.git
+.\questbook-ia\scripts\bootstrap.ps1         # Windows
 ```
 
-Le script clone `questbook-app` et `questbook-back` **dans** ce dossier. Ouvrir
-ensuite `questbook/` comme dossier de travail : c'est depuis sa racine que les
-regles de `.cursor/rules/` se chargent, et elles ne se chargeraient pas depuis
-un depot voisin.
+Le script clone les deux depots produit a cote, puis expose les regles a la
+racine. Ouvrir ensuite `questbook/`, et non l'un des depots.
+
+## Pourquoi un lien a la racine
+
+Cursor ne documente le chargement des regles qu'a la racine du dossier ouvert.
+Deux consequences pour cette disposition :
+
+- Un `AGENTS.md` place dans un sous-dossier n'est lu, d'apres la documentation,
+  que pour les fichiers de ce sous-dossier. Il serait donc ignore au moment
+  precis ou il sert, en travaillant dans `questbook-app`. La carte de
+  l'ecosysteme est pour cette raison une regle `.mdc` en `alwaysApply`, pas un
+  `AGENTS.md`.
+- Le chargement de regles depuis un `.cursor/` niche n'est pas documente. Le
+  bootstrap ne parie donc pas dessus : il cree un lien (jonction sous Windows,
+  lien symbolique ailleurs) de `.cursor/rules` vers celui de ce depot. Les
+  regles restent versionnees ici, en un seul exemplaire.
 
 ## Ce qu'il contient
 
 | Chemin | Role |
 | --- | --- |
-| `AGENTS.md` | La carte de l'ecosysteme, lue par l'agent au demarrage. |
-| `.cursor/rules/` | Les regles de fonctionnement, dont le suivi du tableau. |
-| `scripts/bootstrap.*` | Clone les deux depots produit. |
+| `.cursor/rules/kanban-workflow.mdc` | Le tableau comme source de verite, et ce que veut dire chaque colonne. |
+| `.cursor/rules/questbook-ecosysteme.mdc` | La carte : depots, ou est la connaissance, workflow git, contraintes de poste. |
+| `scripts/bootstrap.*` | Clone les depots produit et pose le lien des regles. |
 
 ## Ce qu'il ne contient pas
 
