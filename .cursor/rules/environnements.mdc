@@ -1,0 +1,64 @@
+---
+description: Les quatre etapes dev, test, staging et production de Questbook
+alwaysApply: true
+---
+
+# Etapes et environnements
+
+| Etape | L'application | Le backend |
+| --- | --- | --- |
+| `dev` | Locale, sur simulateur ou emulateur. | Local. |
+| `test` | Locale, sur simulateur ou sur un vrai appareil branche si possible. | VPS. |
+| `staging` | Release distribuee par Firebase App Distribution, testee **par un humain sur un vrai appareil**. | VPS. |
+| `production` | Publiee sur les stores. | VPS. |
+
+Le VPS est `https://questbook.nextuscorp.com`.
+
+## dev
+
+Demarrer l'API dans `questbook-back` :
+
+```bash
+docker compose -f docker-compose.dev.yml up   # base de donnees
+npm run dev                                   # API en watch
+```
+
+Puis l'app, en la pointant vers cette API. L'adresse depend de la cible, et
+c'est la source d'erreur la plus frequente :
+
+| Cible | `QUESTBOOK_API_URL` |
+| --- | --- |
+| Emulateur Android | `http://10.0.2.2:3000` (defaut du code) |
+| Simulateur iOS | `http://localhost:3000` |
+| Appareil physique | `http://<adresse LAN de la machine>:3000`, pare-feu ouvert |
+
+```bash
+flutter run -d <appareil> \
+  --dart-define=QUESTBOOK_API_URL=<url ci-dessus> \
+  --dart-define=QUESTBOOK_GOOGLE_SERVER_CLIENT_ID=<client-web>.apps.googleusercontent.com
+```
+
+Sans `QUESTBOOK_GOOGLE_SERVER_CLIENT_ID`, l'app demarre **hors ligne** : ni
+connexion, ni synchronisation. C'est volontaire, pas une panne.
+
+## test
+
+Meme lancement local, mais `QUESTBOOK_API_URL=https://questbook.nextuscorp.com`.
+Sert a verifier l'app contre le vrai serveur sans passer par une distribution.
+
+## staging
+
+Merger `dev` dans `main` declenche `firebase-distribution.yml`, qui construit,
+signe et distribue au groupe `testeurs`. C'est un geste de release, decide par
+Robin. La version doit avoir ete montee dans la PR, sans quoi le job saute le
+build.
+
+## production
+
+`store-publish.yml` publie vers TestFlight et le Play Store.
+
+## Une seule base pour trois etapes
+
+`test`, `staging` et `production` partagent le meme backend et donc les memes
+donnees. Un test mene contre le VPS ecrit dans les donnees reelles : en tenir
+compte avant d'essayer un cas destructeur, et preferer `dev` pour ceux-la.
