@@ -45,6 +45,17 @@ met a jour.
   traces que les builds Ad Hoc n'affichent pas.
 - La CI construit iOS sur un runner `macos-latest`, quel que soit le poste.
 
+## Faire evoluer ces regles
+
+Le `.cursor/rules` de la racine est un lien vers celui de `questbook-ia` : le
+modifier depuis la racine modifie le fichier du depot, sans copie ni
+synchronisation a faire. Mais rien n'est conserve tant que ce n'est pas
+committe **dans `questbook-ia`**, que `git -C questbook-ia status` revele.
+
+Toute convention, contrainte ou lecon apprise en cours de route s'ecrit ici
+dans la foulee. Ce qui reste dans un fil de conversation est perdu des le
+changement de poste.
+
 ## PowerShell
 
 Pas de heredocs : passer les corps d'issue, descriptions de PR et messages de
