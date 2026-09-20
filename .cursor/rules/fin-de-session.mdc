@@ -8,6 +8,16 @@ alwaysApply: true
 Deux choses a ne pas laisser derriere soi : un tableau qui ment, et des
 processus qui mangent la machine.
 
+## Quand cette regle s'applique
+
+**A la fin d'une session, pas a la fin d'une carte.** Une session enchaine
+souvent plusieurs cartes, et tout eteindre entre deux fait tout rallumer
+trois minutes plus tard : la base met du temps a repartir, l'emulateur encore
+plus. Une carte finie laisse l'environnement tel quel.
+
+C'est Robin qui dit quand on arrete. Sans ce signal, l'environnement reste
+debout.
+
 ## La trace
 
 - Le tableau reflete l'etat reel. Une carte encore `In progress` alors que
