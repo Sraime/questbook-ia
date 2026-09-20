@@ -13,6 +13,12 @@ L'ordre suit la construction du produit, des personnes vers ce qu'elles
 manipulent, plutôt que l'alphabet : chaque définition s'appuie sur les
 précédentes.
 
+Un préalable à tout le reste : **Questbook ne parle que de l'Appel de
+Cthulhu**. Le mot « univers » ne s'affiche nulle part et rien ne se choisit —
+ni à la création d'un personnage, ni à celle d'une table. La mécanique de
+configuration saurait en accueillir un second, mais tant que ce n'est pas
+décidé, le joueur n'a pas à en soupçonner l'existence.
+
 | Concept | En une ligne |
 | --- | --- |
 | [Utilisateur](#utilisateur) | Un compte Google, l'identité unique de quelqu'un dans Questbook. |
@@ -79,8 +85,7 @@ cours, plateau compris. Voir [Plateau](#plateau).
 Le groupe de personnes qui joue ensemble, et le cadre de tout le reste :
 une campagne, ses joueurs, ses sessions.
 
-Une table a un titre, un univers indicatif, un propriétaire — son MJ — et des
-membres. On y entre sur **invitation par adresse Google**, jamais en se
+Une table a un titre, un propriétaire — son MJ — et des membres. On y entre sur **invitation par adresse Google**, jamais en se
 servant soi-même.
 
 C'est **le seul objet vraiment partagé** du produit, et la conséquence est
@@ -195,7 +200,6 @@ qu'il est à vous.
 
 ---
 
-Ce lexique n'est pas complet : **Personnage**, **Univers**, **Mode de
-création** et **Notification** méritent leur entrée le jour où le besoin s'en
-fait sentir. Un concept qu'on a dû expliquer deux fois est un concept à
+Ce lexique n'est pas complet : **Personnage**, **Mode de création** et
+**Notification** méritent leur entrée le jour où le besoin s'en fait sentir. Un concept qu'on a dû expliquer deux fois est un concept à
 ajouter ici.
