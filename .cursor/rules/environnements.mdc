@@ -34,12 +34,26 @@ c'est la source d'erreur la plus frequente :
 
 ```bash
 flutter run -d <appareil> \
-  --dart-define=QUESTBOOK_API_URL=<url ci-dessus> \
-  --dart-define=QUESTBOOK_GOOGLE_SERVER_CLIENT_ID=<client-web>.apps.googleusercontent.com
+ --dart-define=QUESTBOOK_API_URL=<url ci-dessus> \
+ --dart-define=QUESTBOOK_GOOGLE_SERVER_CLIENT_ID=56734402863-bugmvgqggfhi7g0nv02o7c0uv1uarajf.apps.googleusercontent.com
 ```
 
 Sans `QUESTBOOK_GOOGLE_SERVER_CLIENT_ID`, l'app demarre **hors ligne** : ni
 connexion, ni synchronisation. C'est volontaire, pas une panne.
+
+**C'est le client Web, et lui seul.** Le projet en a trois, et celui qu'on
+croise en premier n'est pas le bon : `firebase_options.dart` et
+`ios/Runner/Info.plist` exposent le client **iOS**. Le passer ici fait
+echouer la connexion sur `[28444] Developer console is not set up correctly.`,
+un message qui accuse la console alors que rien n'y est casse — on peut y
+perdre une heure. Le type se lit dans `android/app/google-services.json` :
+`client_type: 3` est le Web, `1` l'Android, `2` l'iOS.
+
+**Passer de `test` a `dev` deconnecte l'appareil.** Le jeton de
+rafraichissement stocke vient du VPS, que la base de dev ignore : elle repond
+401, et l'app efface ses jetons des qu'un rafraichissement echoue. Une session
+vieille de plusieurs semaines disparait en un lancement. Ce n'est pas grave
+tant qu'on sait se reconnecter, d'ou l'importance du bon client ci-dessus.
 
 ## test
 
