@@ -18,21 +18,42 @@ Les cartes sont de **vraies issues**, ouvertes dans `Sraime/questbook-app` ou
 | `Backlog` | Encore en reflexion. **Je ne demarre rien** dessus sans accord explicite de Robin. |
 | `Todo` | Prete, le developpement peut commencer. |
 | `In progress` | En cours d'implementation. Une seule a la fois autant que possible. |
+| `Tests` | Code pousse, analyse et tests automatises verts. **J'y fais tourner la carte sur simulateur ou emulateur, et j'en rends compte.** |
 | `Blocked` | Une action manuelle de Robin est requise pour confirmer ou continuer. |
-| `Done` | Code fini, tests verts, doc a jour, pousse. Prete pour la prochaine release. |
+| `Done` | Teste sur simulateur, doc a jour. Prete pour la prochaine release. |
 
-Deux consequences a retenir :
+Trois consequences a retenir :
 
+- **`Tests` n'est pas facultatif.** Une carte ne passe en `Done` que si je l'ai
+  vue tourner sur un appareil. `flutter analyze` et `flutter test` au vert ne
+  disent rien du rendu, ni d'un ecran qui ne s'ouvre pas : ils valident la
+  carte pour entrer en `Tests`, pas pour en sortir. Si je ne peux pas lancer
+  l'appareil, la carte reste en `Tests` ou passe en `Blocked` — jamais en
+  `Done` sur la foi des tests automatises.
 - **`Done` ne veut pas dire livre.** Merger, deployer et publier la release
   restent des gestes a part, decides par Robin.
 - **`Blocked` est ma sortie de secours.** Des que j'ai besoin de lui — une
-  console tierce, un test sur appareil, un identifiant, un arbitrage — je passe
-  la carte en `Blocked` et je le dis, au lieu d'attendre en silence.
+  console tierce, un test sur appareil physique, un identifiant, un arbitrage —
+  je passe la carte en `Blocked` et je le dis, au lieu d'attendre en silence.
+
+## Passer une carte en `Tests`
+
+Sur Windows, « simulateur » veut dire l'emulateur Android `questbook_test` :
+aucun appareil Apple n'est pilotable depuis ce poste (voir la carte de
+l'ecosysteme). Le detail du lancement — backend local, `QUESTBOOK_API_URL`
+selon la cible, `QUESTBOOK_GOOGLE_SERVER_CLIENT_ID` sans lequel l'app demarre
+hors ligne — vit dans la regle des environnements.
+
+Rendre compte, c'est dire **ce qui a ete regarde a l'ecran**, pas « lance sans
+erreur ». Une capture (`adb shell screencap` puis `adb pull`) vaut mieux qu'une
+phrase. Et couper l'emulateur en fin de session, comme le rappelle la regle de
+fin de session.
 
 ## Au debut de chaque session
 
-Lire le tableau. Reprendre les cartes `In progress`, puis rendre compte des
-`Blocked` et de ce qu'elles attendent.
+Lire le tableau. Reprendre les cartes `In progress`, puis celles restees en
+`Tests` — c'est la qu'une session interrompue laisse du travail fini mais non
+verifie — puis rendre compte des `Blocked` et de ce qu'elles attendent.
 
 ## Pendant le travail
 
@@ -57,7 +78,8 @@ gh project item-edit --project-id PVT_kwHOALVndc4Bi4Ow `
 ```
 
 Options de `Status` : `Backlog` = `f75ad846`, `Todo` = `6c5f1f94`,
-`In progress` = `47fc9ee4`, `Blocked` = `df73e18b`, `Done` = `98236657`.
+`In progress` = `47fc9ee4`, `Tests` = `10948985`, `Blocked` = `df73e18b`,
+`Done` = `98236657`.
 
 PowerShell ne gere pas les heredocs : passer les corps d'issue et les messages
 de commit par un fichier.
