@@ -41,6 +41,12 @@ met a jour.
 - Merger `dev` vers `main` **declenche la distribution aux testeurs**. C'est un
   geste de release, decide par Robin, jamais pris a l'initiative de l'agent.
 
+`gh pr checks` repond parfois `no checks reported` plusieurs minutes apres
+l'ouverture d'une PR. La CI n'est pas cassee et le workflow n'est pas mal
+declenche : GitHub ne l'a simplement pas encore distribue. Attendre et
+reessayer avant d'aller verifier le `on:` du workflow ou de pousser un commit
+vide.
+
 ## Contraintes de poste
 
 - **Windows** : aucun build iOS possible. Ni `flutter run`, ni `flutter logs`,
