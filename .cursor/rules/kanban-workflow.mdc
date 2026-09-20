@@ -38,11 +38,21 @@ Trois consequences a retenir :
 
 ## Passer une carte en `Tests`
 
-Sur Windows, « simulateur » veut dire l'emulateur Android `questbook_test` :
-aucun appareil Apple n'est pilotable depuis ce poste (voir la carte de
-l'ecosysteme). Le detail du lancement — backend local, `QUESTBOOK_API_URL`
-selon la cible, `QUESTBOOK_GOOGLE_SERVER_CLIENT_ID` sans lequel l'app demarre
-hors ligne — vit dans la regle des environnements.
+Sur Windows, « simulateur » veut dire l'emulateur Android `questbook_play`
+(telephone, avec Google Play donc connexion possible) ou `questbook_tablet`,
+seul assez grand pour le mode MJ : aucun appareil Apple n'est pilotable depuis
+ce poste (voir la carte de l'ecosysteme). Le detail du lancement — backend
+local, `QUESTBOOK_API_URL` selon la cible,
+`QUESTBOOK_GOOGLE_SERVER_CLIENT_ID` sans lequel l'app demarre hors ligne —
+vit dans la regle des environnements.
+
+**Pour une carte de `questbook-back`, l'equivalent est l'API qui tourne
+vraiment** : `npm run dev`, puis interroger les routes et regarder la base.
+Une migration qui seme une ligne se verifie dans la base de dev, pas seulement
+dans une fixture de test. Attention, la base de test est une base a part
+(`TEST_DATABASE_URL`, `questbook_test`) : une migration fraiche doit y etre
+appliquee par `prisma migrate deploy` avant que `npm test` ne passe, sinon
+toutes les suites echouent sur une table manquante.
 
 Rendre compte, c'est dire **ce qui a ete regarde a l'ecran**, pas « lance sans
 erreur ». Une capture (`adb shell screencap` puis `adb pull`) vaut mieux qu'une
