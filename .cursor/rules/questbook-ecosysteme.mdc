@@ -23,6 +23,10 @@ Cette carte ne duplique rien : deux copies divergent toujours, et c'est celle
 qu'on lit qui a tort. Le detail vit au plus pres du code, et c'est la qu'il se
 met a jour.
 
+- `questbook-ia/LEXIQUE.md` — le vocabulaire du produit : ce qu'est une table,
+ une session, un scenario, un plateau, un asset, la boutique. A lire avant de
+ nommer quoi que ce soit, et a completer des qu'un concept a du etre explique
+ deux fois.
 - `questbook-app/README.md` — la reference : architecture, moteur de regles,
   synchronisation, hors ligne, signature Android et iOS, distribution aux
   testeurs, publication sur les stores.

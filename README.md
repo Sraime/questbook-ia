@@ -66,6 +66,7 @@ Deux consequences pour cette disposition :
 
 | Chemin | Role |
 | --- | --- |
+| `LEXIQUE.md` | Ce que designe chaque mot du produit : table, session, scenario, plateau, asset, boutique. |
 | `.cursor/rules/kanban-workflow.mdc` | Le tableau comme source de verite, et ce que veut dire chaque colonne. |
 | `.cursor/rules/questbook-ecosysteme.mdc` | La carte : depots, ou est la connaissance, workflow git, contraintes de poste. |
 | `.cursor/rules/environnements.mdc` | Les quatre etapes dev, test, staging, production et leur configuration. |
