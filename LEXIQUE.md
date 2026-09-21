@@ -15,7 +15,7 @@ précédentes.
 
 Un préalable à tout le reste : **Questbook ne parle que de l'Appel de
 Cthulhu**. Le mot « univers » ne s'affiche nulle part et rien ne se choisit —
-ni à la création d'un personnage, ni à celle d'une table. La mécanique de
+ni à la création d'un investigateur, ni à celle d'une table. La mécanique de
 configuration saurait en accueillir un second, mais tant que ce n'est pas
 décidé, le joueur n'a pas à en soupçonner l'existence.
 
@@ -24,6 +24,7 @@ décidé, le joueur n'a pas à en soupçonner l'existence.
 | [Utilisateur](#utilisateur) | Un compte Google, l'identité unique de quelqu'un dans Questbook. |
 | [Joueur](#joueur) | Un utilisateur vu depuis une table, par opposition au MJ. |
 | [Maître du jeu (MJ)](#maître-du-jeu-mj) | Celui qui anime la table et décide de son organisation. |
+| [Investigateur](#investigateur) | Le personnage qu'un joueur incarne. Le produit ne dit plus « personnage ». |
 | [Table](#table) | Le groupe qui joue ensemble, et le seul objet vraiment partagé. |
 | [Session](#session) | Une soirée de jeu datée, proposée par le MJ à sa table. |
 | [Scénario](#scénario) | Une aventure écrite par Questbook, qu'on possède et qu'on télécharge. |
@@ -39,8 +40,8 @@ par les autres, et une adresse Google est une identité que le joueur possède
 déjà.
 
 L'utilisateur est le propriétaire de ce qui lui appartient en propre : ses
-**personnages**, ses scénarios possédés, ses assets achetés, ses
-notifications. Ces possessions le suivent d'un appareil à l'autre, c'est tout
+**[investigateurs](#investigateur)**, ses scénarios possédés, ses assets
+achetés, ses notifications. Ces possessions le suivent d'un appareil à l'autre, c'est tout
 l'objet de la synchronisation.
 
 Sur l'appareil, tout ce qui est gardé en local est **rattaché au compte** —
@@ -57,8 +58,8 @@ Un utilisateur **membre d'une table**, avec le rôle `player`. C'est le rôle
 par défaut : on le devient en acceptant une invitation.
 
 Un joueur consulte la table et ses sessions, répond aux sessions à venir, et
-dit avec quel personnage il vient. Il ne modifie pas la table : ni invitation,
-ni session, ni dissolution.
+dit avec quel [investigateur](#investigateur) il vient. Il ne modifie pas la
+table : ni invitation, ni session, ni dissolution.
 
 Employé seul, « joueur » désigne aussi, plus largement, quiconque utilise
 Questbook — le texte des écrans s'autorise ce sens courant. Dans le code, le
@@ -80,6 +81,33 @@ beaucoup de choses dans les écrans de session.
 Le **mode MJ** est autre chose : l'écran depuis lequel il anime une séance en
 cours, plateau compris. Voir [Plateau](#plateau).
 
+## Investigateur
+
+Le personnage qu'un joueur incarne : un nom, un métier, des caractéristiques,
+des compétences, un inventaire, et une santé mentale qui s'effrite. C'est ce
+qu'on crée dans l'onglet **Investigateurs** et ce qu'on rattache à une
+session pour dire avec qui on vient.
+
+**Le produit ne dit plus « personnage ».** L'app ne parle que de l'Appel de
+Cthulhu, où celui qu'on joue est un investigateur : garder les deux mots
+faisait croire à deux notions. Les textes affichés disent donc tous
+« investigateur », partout où il s'agit du personnage d'un joueur.
+
+Trois exceptions, et elles ne sont pas des oublis :
+
+- **Le PNJ reste un personnage non-joueur.** C'est le terme du jeu de rôle,
+  celui que le MJ emploie, et il désigne justement ce qui n'est pas un
+  investigateur.
+- **Le rayon d'assets « Personnages »** garde son nom : il mêle
+  investigateurs, PNJ et créatures. Voir [Asset](#asset).
+- **Le code n'a pas été renommé** — `Character`, `characterListProvider`,
+  `/perso`. C'est un changement de vocabulaire affiché, pas un refactor ; le
+  jour où l'un traduit l'autre, il se fera d'un bloc.
+
+Un investigateur appartient à son créateur seul, vit **sur l'appareil**
+d'abord et se synchronise. C'est l'inverse d'une table, qui vit sur le
+serveur. Voir [Table](#table).
+
 ## Table
 
 Le groupe de personnes qui joue ensemble, et le cadre de tout le reste :
@@ -89,8 +117,8 @@ Une table a un titre, un propriétaire — son MJ — et des membres. On y entre
 servant soi-même.
 
 C'est **le seul objet vraiment partagé** du produit, et la conséquence est
-structurante : le serveur en est la seule source de vérité. Un personnage se
-modifie hors ligne et se synchronise ; une table, non. L'app en garde une
+structurante : le serveur en est la seule source de vérité. Un investigateur
+se modifie hors ligne et se synchronise ; une table, non. L'app en garde une
 copie pour la relire sans réseau, jamais pour l'écrire.
 
 ## Session
@@ -104,7 +132,7 @@ d'avis tant qu'elle n'a pas eu lieu. Ne pas avoir répondu est un troisième
 état, distinct d'un refus : le MJ a besoin de faire la différence avant de
 décider s'il maintient la séance.
 
-Répondre et **dire avec quel personnage on vient** sont deux gestes séparés :
+Répondre et **dire avec quel investigateur on vient** sont deux gestes séparés :
 on confirme d'abord, on choisit sa fiche plus tard. Les autres membres peuvent
 alors consulter cette fiche en lecture seule.
 
@@ -154,7 +182,7 @@ son rayon — dans le tiroir du mode MJ comme dans la bibliothèque `/assets` :
 
 | Nature | Ce qu'elle représente | Forme du socle |
 | --- | --- | --- |
-| **Personnage** | Un personnage joueur, un PNJ, une créature. | Cercle plein |
+| **Personnage** | Un investigateur, un PNJ, une créature. | Cercle plein |
 | **Environnement** | Un décor, un meuble, un obstacle. | Triangle plein |
 | **Effet** | Un effet en cours, un piège, une zone de dégâts. | Rectangle plein |
 | **Zone** | Une portée, une pièce, un pan de terrain. | Disque ou carré, blanc translucide |
@@ -200,6 +228,6 @@ qu'il est à vous.
 
 ---
 
-Ce lexique n'est pas complet : **Personnage**, **Mode de création** et
-**Notification** méritent leur entrée le jour où le besoin s'en fait sentir. Un concept qu'on a dû expliquer deux fois est un concept à
+Ce lexique n'est pas complet : **Mode de création** et **Notification**
+méritent leur entrée le jour où le besoin s'en fait sentir. Un concept qu'on a dû expliquer deux fois est un concept à
 ajouter ici.
