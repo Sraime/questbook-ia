@@ -71,6 +71,47 @@ build.
 
 `store-publish.yml` publie vers TestFlight et le Play Store.
 
+## L'app ne part jamais devant son backend
+
+**Avant toute distribution, verifier que le VPS fait tourner le backend dont
+l'app a besoin.** Les deux depots avancent a leur rythme, et rien ne les
+synchronise : `questbook-back` se deploie a la main, tandis que merger
+`questbook-app` vers `main` distribue tout seul.
+
+C'est deja arrive une fois, le 21 septembre. La `1.27.3+40` est partie aux
+testeurs et sur TestFlight avec le mode seance partage, les PNJ et les
+scenarios de la boutique, pendant que le VPS tournait sur un `main` vieux de
+onze commits. Resultat visible : changer son pseudo repondait
+`404 Route not found`. Resultat invisible : la moitie de la release ne
+fonctionnait pas, et c'est un test au hasard qui l'a revele.
+
+Le controle tient en une commande. Une route qui existe repond `401`, une
+route absente repond `404` — le routage precede l'authentification :
+
+```powershell
+curl.exe -s -o NUL -w "%{http_code}" -X PATCH `
+  https://questbook.nextuscorp.com/api/v1/auth/me
+```
+
+Et l'ecart entre le deploye et le code se lit directement :
+
+```powershell
+ssh -i "$env:USERPROFILE\.ssh\questbook_vps_ed25519" -p 2222 `
+  debian@151.80.144.246 "cd /opt/questbook && git log --oneline -1"
+```
+
+Deployer, c'est merger `dev` vers `main` dans `questbook-back`, puis :
+
+```powershell
+ssh -i "$env:USERPROFILE\.ssh\questbook_vps_ed25519" -p 2222 `
+  debian@151.80.144.246 "cd /opt/questbook && ./deploy/deploy.sh"
+```
+
+Le script tire le code, reconstruit les conteneurs et applique les migrations.
+**Compter une quinzaine de secondes de `503` apres le redemarrage** : Caddy
+sort l'API de son pool pendant que le conteneur est recree, et son sondage
+actif l'y remet ensuite. Sonder trop tot fait croire a une panne.
+
 ## Une seule base pour trois etapes
 
 `test`, `staging` et `production` partagent le meme backend et donc les memes

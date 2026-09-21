@@ -79,7 +79,9 @@ confirmer et n'apparaît pas parmi les joueurs attendus. Ce point décide de
 beaucoup de choses dans les écrans de session.
 
 Le **mode MJ** est autre chose : l'écran depuis lequel il anime une séance en
-cours, plateau compris. Voir [Plateau](#plateau).
+cours, plateau compris. Voir [Plateau](#plateau). Les joueurs partagent cet
+écran depuis qu'ils peuvent participer à une séance, et c'est le **siège** —
+MJ ou joueur, lu sur la table — qui décide de ce qu'on y voit.
 
 ## Investigateur
 
@@ -132,15 +134,35 @@ d'avis tant qu'elle n'a pas eu lieu. Ne pas avoir répondu est un troisième
 état, distinct d'un refus : le MJ a besoin de faire la différence avant de
 décider s'il maintient la séance.
 
-Répondre et **dire avec quel investigateur on vient** sont deux gestes séparés :
-on confirme d'abord, on choisit sa fiche plus tard. Les autres membres peuvent
-alors consulter cette fiche en lecture seule.
+**Venir, c'est venir avec quelqu'un.** Confirmer sa présence demande de
+désigner son [investigateur](#investigateur) dans le même geste — une chaise
+sans fiche ne sert ni le MJ, qui ne sait pas qui il a en face, ni le joueur,
+qui ne pourrait pas participer à la séance. Se décommander, lui, ne demande
+personne. Les autres membres peuvent consulter la fiche ainsi nommée, en
+lecture seule.
+
+Les deux décisions ne ferment pas ensemble : **répondre** ferme au début de la
+séance, **changer d'investigateur** reste possible jusqu'à sa fin. Le MJ a
+compté ses joueurs et ne veut plus d'arrivants, mais qui joue quoi bouge
+encore une fois la table assise — un investigateur meurt, un autre le
+remplace.
+
+Une séance commencée se **participe** : le joueur qui en est ouvre l'écran de
+la séance, le même que celui du MJ, mais réduit au [plateau](#plateau) qu'il
+regarde et aux investigateurs de la table.
 
 ## Scénario
 
 Une **aventure écrite par Questbook** : son pitch, son contexte, son
 déroulé, et ses annexes — plans, indices, documents à montrer aux joueurs.
 Personne ne crée de scénario dans l'app ; le catalogue appartient au produit.
+
+> Le mot du produit est **scénario**, partout et sans exception : titres
+> d'écran, rayon de la [boutique](#boutique), boutons, notifications.
+> « Aventure » sert à expliquer ce qu'est un scénario, comme ci-dessus, et
+> ne le remplace jamais. Le rayon de la boutique s'est appelé
+> « Aventures » un temps : on y achetait une aventure pour la relire sous
+> « Scénarios », et rien ne disait que c'était la même chose.
 
 Deux notions à ne pas confondre :
 
