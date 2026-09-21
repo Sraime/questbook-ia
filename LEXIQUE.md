@@ -28,7 +28,7 @@ décidé, le joueur n'a pas à en soupçonner l'existence.
 | [Table](#table) | Le groupe qui joue ensemble, et le seul objet vraiment partagé. |
 | [Session](#session) | Une soirée de jeu datée, proposée par le MJ à sa table. |
 | [Scénario](#scénario) | Une aventure écrite par Questbook, qu'on possède et qu'on télécharge. |
-| [Plateau](#plateau) | La carte et les pions d'une session, pendant que le MJ anime. |
+| [Plateau](#plateau) | La carte et les pions d'une session. Le MJ les dispose, la table les regarde. |
 | [Asset](#asset) | Un pion qu'on peut poser sur un plateau. |
 | [Boutique](#boutique) | Le catalogue des articles, et ce que les acheter débloque. |
 
@@ -162,14 +162,21 @@ qu'il anime. Un fond de carte choisi dans un catalogue, des
 
 Trois propriétés qui en font un objet à part :
 
-- Il vit **sur l'appareil**, pas sur le serveur : il se manipule pion par pion
-  pendant la partie, souvent loin d'un réseau fiable, et il ne regarde que le
-  MJ. Personne d'autre ne le voit, et changer de tablette repart d'une carte
-  vierge.
-- Il appartient à un **couple session + compte**. Un autre MJ sur la même
-  tablette n'hérite ni des pions ni des notes.
+- **L'appareil du MJ en détient la vérité, le serveur en garde une copie.** Il
+  se manipule pion par pion pendant la partie, souvent loin d'un réseau
+  fiable : il s'écrit donc en local d'abord, et remonte quand il peut. Une
+  soirée sans couverture continue de marcher, et les joueurs voient un plateau
+  qui a quelques secondes de retard plutôt que pas de plateau du tout.
+  Corollaire assumé : changer de tablette en pleine partie repart d'une carte
+  vierge, puisque c'est l'appareil qui sait.
+- **Les joueurs le regardent, le MJ seul le dispose.** C'est l'inverse exact du
+  PNJ, que le MJ seul voit. Un joueur qui participe à une séance en cours suit
+  les pions bouger, sans pouvoir en poser, en déplacer ni en retirer.
 - Les positions et les tailles sont des **fractions de la carte**, jamais des
   pixels : le même plateau se retrouve identique d'un écran à l'autre.
+
+Les **notes** du MJ, elles, n'ont pas suivi : elles restent sur l'appareil, et
+appartiennent au couple session + compte. Ce qu'il y écrit ne regarde que lui.
 
 ## Asset
 
