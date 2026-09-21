@@ -1,2 +1,4 @@
 # Brouillons locaux : corps d'issues, messages de commit, sorties d'outils
 /.tmp-gm/
+
+.commit-msg.txt
