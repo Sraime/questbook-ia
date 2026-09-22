@@ -66,6 +66,42 @@ Toute convention, contrainte ou lecon apprise en cours de route s'ecrit ici
 dans la foulee. Ce qui reste dans un fil de conversation est perdu des le
 changement de poste.
 
+## Pas d'accents hors de ce qui s'affiche
+
+Les accents ne vivent que dans les **chaines lues par l'utilisateur** : le
+texte d'un ecran, un message d'erreur, le libelle d'un bouton. La, ils sont
+obligatoires — « definitif » sans accent est une faute sous les yeux du
+joueur.
+
+Partout ailleurs, on s'en passe : commentaires, noms de variables et de
+fonctions, messages de commit, titres et corps d'issue et de PR, noms de
+branche, documentation de code. Le sens ne s'y perd pas, et on evite une
+classe entiere de degats.
+
+**Ce n'est pas une preference, c'est une cicatrice.** Chaque outil en ligne
+de commande de ce poste a son idee de l'encodage, et PowerShell la pire de
+toutes : un `Set-Content` sans `-Encoding utf8` reecrit tout un fichier en
+Windows-1252. Les accents deviennent des `?`, et le fichier cesse d'etre
+lisible — `flutter test` echoue alors sur
+`Failed to decode data using encoding 'utf-8'`, un message qui ne nomme pas
+le coupable et coute une demi-heure.
+
+Quand il faut malgre tout reecrire un fichier accentue depuis PowerShell :
+
+```powershell
+$utf8 = New-Object System.Text.UTF8Encoding($false)   # $false : pas de BOM
+$t = [System.IO.File]::ReadAllText($p, $utf8)
+[System.IO.File]::WriteAllText($p, $t, $utf8)
+```
+
+Jamais `Set-Content` ni `Out-File` nus. Et attention : sur PowerShell 5.1,
+`-Encoding utf8` **ajoute un BOM**, qui se voit ensuite en tete de fichier ou
+de message de commit. Seul `UTF8Encoding($false)` ci-dessus n'en met pas.
+
+Apres un remplacement en masse, `git diff --stat` verifie la casse : un
+fichier dont le nombre de lignes changees depasse ce qu'on a ecrit a ete
+reencode.
+
 ## PowerShell
 
 Pas de heredocs : passer les corps d'issue, descriptions de PR et messages de
