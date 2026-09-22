@@ -112,6 +112,51 @@ Le script tire le code, reconstruit les conteneurs et applique les migrations.
 sort l'API de son pool pendant que le conteneur est recree, et son sondage
 actif l'y remet ensuite. Sonder trop tot fait croire a une panne.
 
+### `deploy.sh` ne recree que l'API
+
+Il laisse `caddy` et `db` en place. Or le `Caddyfile` est monte **fichier par
+fichier** dans le conteneur, et `git pull` ne modifie pas un fichier : il en
+ecrit un neuf a la place. Le montage reste accroche a l'ancien inode, si bien
+que **le conteneur continue de servir l'ancienne configuration**, indefiniment.
+
+Le piege est que `caddy reload` n'y change rien : il relit le fichier que le
+conteneur voit, c'est-a-dire l'ancien, et repond sans erreur. On croit avoir
+recharge.
+
+Vu le 22 septembre : la page `/conditions-utilisation` repondait `404` apres
+un deploiement reussi, alors que le fichier etait bien sur le disque et le
+chemin bien dans le `Caddyfile` du depot.
+
+Des que le `Caddyfile` change, il faut donc recreer le conteneur :
+
+```powershell
+ssh -i "$env:USERPROFILE\.ssh\questbook_vps_ed25519" -p 2222 `
+  debian@151.80.144.246 `
+  "cd /opt/questbook && docker compose up -d --force-recreate caddy"
+```
+
+Et verifier ce que le conteneur lit vraiment, pas ce que le disque contient :
+
+```powershell
+ssh ... "cd /opt/questbook && docker compose exec -T caddy cat /etc/caddy/Caddyfile"
+```
+
+Les fichiers de `web/` echappent au probleme : c'est un **repertoire** qui est
+monte, et son contenu suit.
+
+### Une variable neuve ne s'ajoute pas toute seule
+
+Le `.env` du VPS n'est pas versionne : une variable ajoutee a `env.ts` avec un
+defaut vide y sera absente, et le code se degradera en silence plutot que de
+crier. `REPORTS_EMAIL_TO` est partie ainsi — les signalements auraient ete
+enregistres sans reveiller personne.
+
+Avant chaque deploiement, comparer `.env.example` au `.env` du serveur :
+
+```powershell
+ssh ... "cd /opt/questbook && cat .env" # puis diff mental avec .env.example
+```
+
 ## Une seule base pour trois etapes
 
 `test`, `staging` et `production` partagent le meme backend et donc les memes
