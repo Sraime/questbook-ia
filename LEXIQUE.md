@@ -21,7 +21,7 @@ décidé, le joueur n'a pas à en soupçonner l'existence.
 
 | Concept | En une ligne |
 | --- | --- |
-| [Utilisateur](#utilisateur) | Un compte Google, l'identité unique de quelqu'un dans Questbook. |
+| [Utilisateur](#utilisateur) | Un compte Google ou Apple, l'identité unique de quelqu'un dans Questbook. |
 | [Joueur](#joueur) | Un utilisateur vu depuis une table, par opposition au MJ. |
 | [Maître du jeu (MJ)](#maître-du-jeu-mj) | Celui qui anime la table et décide de son organisation. |
 | [Investigateur](#investigateur) | Le personnage qu'un joueur incarne. Le produit ne dit plus « personnage ». |
@@ -34,10 +34,17 @@ décidé, le joueur n'a pas à en soupçonner l'existence.
 
 ## Utilisateur
 
-Une personne, identifiée par son **compte Google**. Il n'y a pas d'autre
-moyen d'entrer : une table se partage, donc chacun doit être reconnaissable
-par les autres, et une adresse Google est une identité que le joueur possède
-déjà.
+Une personne, identifiée par un **compte qu'elle possède déjà ailleurs** :
+Google partout, Apple sur iOS. Il n'y a pas d'autre moyen d'entrer — une table
+se partage, donc chacun doit être reconnaissable par les autres, et une adresse
+vérifiée par un tiers est une identité qu'on n'a pas à administrer.
+
+Le second fournisseur n'est pas un confort : Apple l'exige de toute app dont
+la seule connexion est un service tiers. Et **les deux ne se rejoignent pas**.
+La même personne qui entre par Google puis par Apple obtient deux
+utilisateurs, chacun avec ses investigateurs : Apple ne livre son adresse
+qu'à la première autorisation, le plus souvent derrière un relais privé, et
+rien ne dit alors qu'il s'agit du même humain. Un compte, un fournisseur.
 
 L'utilisateur est le propriétaire de ce qui lui appartient en propre : ses
 **[investigateurs](#investigateur)**, ses scénarios possédés, ses assets
