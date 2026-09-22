@@ -255,6 +255,33 @@ second achat comme le même, jamais comme une erreur. Un article possédé
 n'affiche plus son prix — ce qu'il coûtait n'intéresse plus personne une fois
 qu'il est à vous.
 
+## Signalement
+
+Ce qu'un joueur dépose quand un contenu écrit par quelqu'un d'autre le
+choque. Quatre choses se signalent, et ce sont exactement les quatre endroits
+où Questbook affiche du texte libre : un **pseudo**, le titre d'une
+[table](#table), le titre et la description d'une [session](#session), la
+fiche d'un [investigateur](#investigateur).
+
+Un signalement porte son **motif** — ce que l'auteur du signalement reproche,
+dans ses mots — et un **instantané** : la copie de ce que le contenu disait à
+cet instant. Les deux sont nécessaires et pour des raisons différentes. Sans
+le motif, le support reçoit un identifiant et rien à en faire. Sans
+l'instantané, l'auteur du contenu n'a qu'à le réécrire pour qu'on examine une
+version repentie.
+
+**C'est le serveur qui prend l'instantané**, jamais l'app : un signalement
+dont le client décrirait la cible se forgerait en une requête.
+
+On ne signale pas son propre contenu, et pas deux fois le même — répéter ne
+grossit pas le dossier, cela donnerait un levier de harcèlement par le
+nombre. Deux personnes différentes, en revanche, peuvent bien signaler la
+même chose, et c'est même le signal le plus utile.
+
+À ne pas confondre avec **retirer un joueur**, qui est un geste de
+[MJ](#maître-du-jeu-mj) sur sa propre table : il règle une place, pas un
+comportement, et n'avertit personne.
+
 ---
 
 Ce lexique n'est pas complet : **Mode de création** et **Notification**
