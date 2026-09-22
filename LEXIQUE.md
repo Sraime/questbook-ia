@@ -282,6 +282,23 @@ même chose, et c'est même le signal le plus utile.
 [MJ](#maître-du-jeu-mj) sur sa propre table : il règle une place, pas un
 comportement, et n'avertit personne.
 
+## Blocage
+
+Ce qu'on pose sur **quelqu'un**, pas sur un contenu, quand on ne veut plus le
+croiser. Là où un [signalement](#signalement) réveille le support, le blocage
+vide la chaise d'en face : c'est le seul des deux qui change quelque chose
+tout de suite pour celui qui vient de subir.
+
+Il est **à sens unique** — il dit ce que moi je ne veux plus croiser, et
+l'autre n'en apprend rien — et il **défait le présent** : les invitations en
+attente entre les deux comptes disparaissent, et chaque [table](#table)
+commune se règle selon le rôle qu'on y tient. Joueur, on la quitte ;
+[MJ](#maître-du-jeu-mj), c'est l'autre qui en sort, car partir laisserait une
+salle que plus personne ne peut animer.
+
+**Débloquer ne rend rien.** Les tables quittées le restent, et il faudra une
+nouvelle invitation. C'est le prix du geste, et l'app le dit avant.
+
 ---
 
 Ce lexique n'est pas complet : **Mode de création** et **Notification**
