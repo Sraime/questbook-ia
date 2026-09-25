@@ -157,6 +157,30 @@ Avant chaque deploiement, comparer `.env.example` au `.env` du serveur :
 ssh ... "cd /opt/questbook && cat .env" # puis diff mental avec .env.example
 ```
 
+## Le backoffice, et sa confusion a un port pres
+
+Le backoffice n'est pas sur Internet : son conteneur publie sur la boucle
+locale du VPS et Caddy ne le connait pas. On l'atteint par un tunnel SSH, que
+`questbook-ia/scripts/tunnel-admin.ps1` (ou `.sh`) ouvre.
+
+Le front, lui, est local dans les deux cas : `questbook-back/admin-web`,
+`npm run dev`, sur `http://localhost:5174`. Il proxie vers `127.0.0.1:4000`.
+
+**Et c'est la que ca se joue.** Que l'API d'administration soit celle de la
+machine (`npm run dev:admin`) ou celle du VPS au bout du tunnel, l'adresse est
+la meme et **rien a l'ecran ne les distingue**. Le meme clic suspend un compte
+d'essai ou un vrai joueur. C'est pourquoi le script refuse de s'ouvrir quand le
+port est deja pris, au lieu de laisser les deux se disputer l'adresse :
+
+```powershell
+.\questbook-ia\scripts\tunnel-admin.ps1   # refuse si 4000 est occupe
+```
+
+Se connecter demande un compte cree a la main sur la machine visee, par
+`npx tsx scripts/create-admin.ts <login>`. Les comptes de la base de dev et
+ceux du VPS n'ont rien a voir, et le secret TOTP ne s'affiche qu'une fois :
+le perdre veut dire relancer avec `--reset`.
+
 ## Une seule base pour trois etapes
 
 `test`, `staging` et `production` partagent le meme backend et donc les memes
