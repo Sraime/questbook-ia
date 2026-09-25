@@ -72,6 +72,32 @@ Deux consequences pour cette disposition :
 | `.cursor/rules/environnements.mdc` | Les quatre etapes dev, test, staging, production et leur configuration. |
 | `.cursor/rules/fin-de-session.mdc` | Arreter proprement : le tableau, Docker, les simulateurs. |
 | `scripts/bootstrap.*` | Clone les depots produit et pose le lien des regles. |
+| `scripts/tunnel-admin.*` | Ouvre le tunnel SSH vers le backoffice du VPS. |
+
+## Atteindre le backoffice
+
+Le backoffice n'est pas sur Internet : son conteneur publie sur la boucle
+locale du VPS, et Caddy ne le connait pas. Un tunnel SSH est la seule porte.
+
+```powershell
+.\questbook-ia\scripts\tunnel-admin.ps1      # Windows
+```
+
+```bash
+./questbook-ia/scripts/tunnel-admin.sh       # macOS / Linux
+```
+
+Puis, dans un autre terminal, le front local :
+
+```bash
+cd questbook-back/admin-web && npm run dev   # http://localhost:5174
+```
+
+> Le front proxie vers `127.0.0.1:4000` **dans les deux cas**, en local comme a
+> travers le tunnel : rien a l'ecran ne distingue la base de dev de celle des
+> vrais joueurs. C'est pour cela que le script refuse de s'ouvrir si le port
+> est deja pris, plutot que de laisser deux acces se disputer la meme adresse.
+> Se tromper ici veut dire suspendre un vrai compte en croyant jouer.
 
 ## Ce qu'il ne contient pas
 
