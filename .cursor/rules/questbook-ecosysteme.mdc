@@ -14,8 +14,36 @@ Google est obligatoire, une table etant partagee entre joueurs.
 | Dossier | Ce que c'est |
 | --- | --- |
 | `questbook-app` | L'application Flutter (Dart), Android et iOS. |
-| `questbook-back` | L'API Node/TypeScript + Prisma, derriere Caddy sur `https://questbook.nextuscorp.com`. |
+| `questbook-back` | L'API Node/TypeScript + Prisma, derriere Caddy sur `https://questbook.nextuscorp.com`. Elle heberge aussi le backoffice, ci-dessous. |
 | `questbook-ia` | Ce contexte et les regles de l'agent. Pas de code produit. |
+
+## Le backoffice n'est pas sur Internet
+
+Le suivi des signalements, la moderation et l'administration du contenu vivent
+dans une **seconde application Fastify** du depot `questbook-back`, servie par
+la meme image et la meme base, mais par un autre processus.
+
+Caddy ne la connait pas : elle n'a ni sous-domaine, ni certificat. Son
+conteneur publie sur la **boucle locale du VPS**, et rien d'autre. On y accede
+par un tunnel SSH, sur la cle et le port du deploiement :
+
+```powershell
+ssh -i "$env:USERPROFILE\.ssh\questbook_vps_ed25519" -p 2222 `
+ -N -L 4000:127.0.0.1:4000 debian@151.80.144.246
+```
+
+Deux choses a ne jamais defaire, parce qu'elles sont toute la securite du
+dispositif et qu'elles ont l'air anodines :
+
+- **`ports: '127.0.0.1:4000:4000'`** dans `docker-compose.yml`. Un `4000:4000`
+ nu publierait sur toutes les interfaces en ecrivant directement dans
+ netfilter, donc **sans que UFW ne l'indique nulle part**.
+- **Aucun bloc de site pour le backoffice dans le `Caddyfile`.** L'exposer
+ reviendrait a annuler tout le reste.
+
+Le detail — connexion par mot de passe et TOTP, journal d'audit, file des
+signalements, suspension d'un compte — est dans la section « Le backoffice »
+du `questbook-back/README.md`.
 
 ## Ou chercher le detail
 
