@@ -122,8 +122,9 @@ serveur. Voir [Table](#table).
 Le groupe de personnes qui joue ensemble, et le cadre de tout le reste :
 une campagne, ses joueurs, ses sessions.
 
-Une table a un titre, un propriétaire — son MJ — et des membres. On y entre sur **invitation par adresse Google**, jamais en se
-servant soi-même.
+Une table a un titre, un propriétaire — son MJ — et des membres. On y entre sur **invitation par adresse e-mail**, jamais en se
+servant soi-même. Le fournisseur ne joue aucun rôle : c'est l'adresse qui
+rattache l'invitation au compte qui se connecte ensuite.
 
 C'est **le seul objet vraiment partagé** du produit, et la conséquence est
 structurante : le serveur en est la seule source de vérité. Un investigateur
