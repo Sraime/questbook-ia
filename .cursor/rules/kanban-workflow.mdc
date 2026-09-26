@@ -54,6 +54,27 @@ dans une fixture de test. Attention, la base de test est une base a part
 appliquee par `prisma migrate deploy` avant que `npm test` ne passe, sinon
 toutes les suites echouent sur une table manquante.
 
+**Le backoffice a des ecrans, et ils se regardent aussi.** `admin-web` n'a
+aucun test, et son `tsc --noEmit` ne dit rien d'un formulaire qui ne s'ouvre
+pas. Il n'y a pas d'emulateur ici, mais un navigateur se pilote : `npm i
+playwright-core` dans un dossier a part — le paquet ne telecharge aucun
+navigateur — puis Edge, deja installe sur ce poste :
+
+```js
+const EDGE = 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+await chromium.launch({ executablePath: EDGE, headless: true });
+```
+
+La connexion demande un compte de la base visee et un code TOTP, que
+`npm run admin:totp <login>` imprime en clair. Creer un compte jetable par
+Prisma plutot que d'emprunter celui de Robin, et l'effacer en partant avec ce
+qu'il a ecrit.
+
+Deux pieges de capture : `fullPage` ne sert a rien, la page fait `100vh` et
+c'est un conteneur interne qui defile — `locator.evaluate((n) => n.scrollBy())`
+sur ce conteneur. Et rien a l'ecran ne dit si l'API au bout est celle de dev ou
+celle du VPS : verifier avant de cliquer.
+
 Rendre compte, c'est dire **ce qui a ete regarde a l'ecran**, pas « lance sans
 erreur ». Une capture (`adb shell screencap` puis `adb pull`) vaut mieux qu'une
 phrase. Et couper l'emulateur en fin de session, comme le rappelle la regle de

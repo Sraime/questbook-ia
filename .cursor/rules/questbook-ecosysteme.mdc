@@ -75,6 +75,15 @@ declenche : GitHub ne l'a simplement pas encore distribue. Attendre et
 reessayer avant d'aller verifier le `on:` du workflow ou de pousser un commit
 vide.
 
+**Sauf si la PR est empilee sur une autre.** Les deux workflows declarent
+`on: pull_request: branches: [main, dev]` : une PR dont la base est une branche
+de fonctionnalite n'a **jamais** de check, et aucune attente n'y changera rien.
+Une carte qui a besoin du schema d'une PR pas encore fusionnee tombe donc dans
+ce cas. Trois issues, une seule bonne selon le moment : fusionner d'abord la PR
+du dessous, recibler sur `dev` en assumant que le diff porte les deux, ou
+laisser la carte en `Tests` en disant que la CI ne peut pas se prononcer. C'est
+Robin qui tranche, puisque fusionner est son geste.
+
 ## Contraintes de poste
 
 - **Windows** : aucun build iOS possible. Ni `flutter run`, ni `flutter logs`,
