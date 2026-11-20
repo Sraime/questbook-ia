@@ -92,6 +92,52 @@ Robin qui tranche, puisque fusionner est son geste.
   traces que les builds Ad Hoc n'affichent pas.
 - La CI construit iOS sur un runner `macos-latest`, quel que soit le poste.
 
+## Les versions d'outils sont epinglees, et ce n'est pas du zele
+
+Les workflows de `questbook-app` fixent `flutter-version`. Avant, ils
+demandaient `channel: stable` et rien d'autre.
+
+Le 20 novembre, apres deux mois sans y toucher, la CI etait rouge **sans
+qu'une ligne du depot ait bouge** : la stable avait avance, Flutter avait
+sorti Material et Cupertino de son coeur, et `flutter analyze` affichait 115
+depreciations d'un coup. Le meme code, sur la version du poste, repondait
+`No issues found!`.
+
+Le vrai danger n'etait pas ce rouge. `firebase-distribution.yml` et
+`store-publish.yml` construisent ce qui part chez les testeurs et sur les
+stores : sans version epinglee, **rien ne disait avec quel compilateur un
+binaire publie avait ete produit**. Changer de Flutter doit etre une PR, pas
+une derive de calendrier.
+
+Monter cette version, c'est donc : epingler la nouvelle, lancer un build, et
+seulement ensuite fusionner.
+
+## Monter Flutter emmene toute la chaine Android avec lui
+
+Et **ni `flutter analyze` ni `flutter test` ne le voient**, parce que la CI
+n'assemble aucun binaire. Au passage en 3.50.1, les deux etaient verts tandis
+que `flutter run` echouait deux fois de suite :
+
+- Gradle sous `9.3.1` refuse de demarrer ;
+- puis AGP sous `9.1.1` refuse a son tour.
+
+Les versions a viser ne se devinent pas : elles sont ecrites dans le Flutter
+installe, et c'est la seule source juste.
+
+```powershell
+$fl = (Get-Command flutter).Source | Split-Path | Split-Path
+Select-String -Path "$fl\packages\flutter_tools\lib\src\android\gradle_utils.dart" `
+  -Pattern 'template.*Version|maxKnownAndSupported'
+```
+
+Pour 3.50.1 : Gradle `9.5.0`, AGP `9.3.1`, Kotlin `2.4.20`, NDK r28. Elles
+vivent dans `android/gradle/wrapper/gradle-wrapper.properties` et
+`android/settings.gradle.kts`.
+
+La lecon generale : **une carte qui touche a Flutter ou a Gradle ne passe pas
+en `Tests` sur la foi de la CI.** Il faut un `flutter run` sur l'emulateur, et
+un `flutter build appbundle --release` si une publication suit.
+
 ## Faire evoluer ces regles
 
 Le `.cursor/rules` de la racine est un lien vers celui de `questbook-ia` : le

@@ -71,6 +71,41 @@ build.
 
 `store-publish.yml` publie vers TestFlight et le Play Store.
 
+Il se declenche sur une **Release GitHub publiee**, ou a la main
+(`workflow_dispatch`). Le job de version exige que le tag `v<version>` existe
+deja : une publication se relance donc sur `main`, pour une version que les
+testeurs ont recue, sans rien redistribuer.
+
+### Ce que les stores exigent, et quand
+
+Les dates tombent toujours au meme endroit — le 31 aout chez Google, avril
+chez Apple — et personne ne previent.
+
+| Echeance | Exigence | Ou ca se joue |
+| --- | --- | --- |
+| Faite, 31 aout 2026 | Toute soumission Play cible l'API 36 | `targetSdk`, pris de Flutter |
+| Faite, 28 avril 2026 | Tout envoi a App Store Connect est bati avec Xcode 26 / SDK iOS 26 | `macos-latest`, qui porte Xcode 26 depuis juillet 2026 |
+| 1er fevrier 2027 | Les `.so` supportent les pages de 16 Ko | NDK r28, via Flutter |
+| Fevrier 2027 | 25 % d'optimisation DEX, et des seuils memoire | R8, a lire dans l'App Bundle Explorer |
+| Avril 2027 | Restauration de session sans geste (Restore Credentials API) | A ecrire : la connexion de Questbook est obligatoire |
+| Avril 2027 | SDK iOS 27, **et cible minimale iOS 15** | `IPHONEOS_DEPLOYMENT_TARGET`, encore a 13.0 |
+
+L'alignement 16 Ko ne se suppose pas, il se lit dans le binaire qu'on
+s'apprete a publier :
+
+```powershell
+Copy-Item build\app\outputs\bundle\release\app-release.aab "$env:TEMP\b.zip"
+Expand-Archive "$env:TEMP\b.zip" -DestinationPath "$env:TEMP\b" -Force
+$ndk = (Get-ChildItem "$env:LOCALAPPDATA\Android\Sdk\ndk" -Recurse `
+  -Filter llvm-readelf.exe | Select-Object -First 1).FullName
+Get-ChildItem "$env:TEMP\b" -Recurse -Filter *.so |
+  Where-Object { $_.FullName -match 'arm64' } | ForEach-Object {
+    & $ndk -lW $_.FullName | Select-String '^\s+LOAD' | Select-Object -First 1
+  }
+```
+
+`0x4000` ou plus est conforme, `0x1000` ne l'est pas.
+
 ## L'app ne part jamais devant son backend
 
 **Avant toute distribution, verifier que le VPS fait tourner le backend dont
