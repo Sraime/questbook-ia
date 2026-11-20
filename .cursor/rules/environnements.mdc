@@ -125,8 +125,12 @@ route absente repond `404` — le routage precede l'authentification :
 
 ```powershell
 curl.exe -s -o NUL -w "%{http_code}" -X PATCH `
-  https://questbook.nextuscorp.com/api/v1/auth/me
+ https://questbook.nextuscorp.com/api/v1/auth/me
 ```
+
+Un `400` veut dire aussi que la route existe : la validation du corps passe
+avant l'authentification, et ce `PATCH` sans corps y echoue. C'est ce qu'il
+repond depuis novembre ; seul le `404` est un signal d'alarme.
 
 Et l'ecart entre le deploye et le code se lit directement :
 
@@ -191,6 +195,30 @@ Avant chaque deploiement, comparer `.env.example` au `.env` du serveur :
 ```powershell
 ssh ... "cd /opt/questbook && cat .env" # puis diff mental avec .env.example
 ```
+
+### Ce que les mises a jour automatiques ne font pas
+
+`unattended-upgrades` n'applique que les depots Debian. Trois choses restent a
+la main, et ont ete trouvees en retard a l'audit du 20 novembre :
+
+- **Docker et containerd**, dont le depot n'est pas dans ses origines :
+  `sudo apt-get upgrade`, qui redemarre Docker et donc les conteneurs.
+- **Les images `caddy` et `postgres`**, epinglees sur une branche
+  (`2-alpine`, `17-alpine`) mais jamais retirees :
+  `docker compose pull caddy db && docker compose up -d caddy db`.
+- **Le noyau**, installe mais inactif tant qu'on ne redemarre pas :
+  `/var/run/reboot-required` le signale.
+
+Avant d'y toucher, une sauvegarde dans `~/backups` sur le VPS :
+
+```bash
+docker compose exec -T db sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc' \
+  </dev/null > ~/backups/questbook-$(date -u +%Y%m%dT%H%M%SZ).dump
+```
+
+Le `</dev/null` n'est pas decoratif : `docker compose exec -T` lit l'entree
+standard, et dans un script envoye par `ssh ... bash -s` il avale toutes les
+lignes qui suivent, qui ne s'executent alors jamais.
 
 ## Le backoffice, et sa confusion a un port pres
 
