@@ -231,6 +231,10 @@ Deux provenances, et une seule façon de les ranger :
   un personnage acheté se cherche avec les personnages, pas dans une vitrine à
   part.
 
+Son illustration est **embarquée** dans l'app (le Grand Ancien) ou
+**hébergée** par le serveur, pour ceux qu'on ajoute depuis le backoffice sans
+publier de version. Les joueurs voient les deux de la même façon.
+
 Un asset acheté est **acquis pour de bon**, par le compte et non par
 l'appareil. Un pion posé se souvient de l'article dont il vient, ce qui permet
 un jour de montrer un pion par défaut à qui ne le possède pas, plutôt que de
@@ -257,6 +261,10 @@ Les prix s'expriment en centimes côté serveur, pour qu'aucun arrondi
 n'intervienne dans l'app. **Il n'y a pas encore de paiement** : le seul prix
 qui existe est `0 €`, et il s'affiche comme un prix, pas comme une mention
 « gratuit ».
+
+Un article peut être **retiré de la vente** : il disparaît de la boutique,
+mais reste à qui le possède, et un pion déjà posé garde son dessin. Rien ne se
+supprime de la boutique.
 
 Acheter est **sans conséquence si on recommence** : le serveur traite un
 second achat comme le même, jamais comme une erreur. Un article possédé
