@@ -263,7 +263,16 @@ dit ce que l'acheter débloque :
 | --- | --- |
 | **asset** | Un [pion ou une carte](#asset) de plus dans le tiroir du MJ et la bibliothèque. |
 | **scenario** | La possession d'un [scénario](#scénario), qui apparaît alors dans la liste. |
-| **pack** | Un lot. Le type existe, le contenu n'est pas défini : rien ne s'achète encore ainsi. |
+| **bundle** | Un lot d'assets et de scénarios qui existent déjà, en vente ou non : de quoi préparer une partie d'un seul achat. L'obtenir donne tout son contenu. |
+
+Un **bundle** a sa propre image, envoyée depuis le backoffice. Il s'appelait
+« pack » tant qu'il n'avait pas de contenu ; c'est le même type d'article. Deux
+bundles peuvent se recouper : ce qu'on possède déjà est simplement ignoré, et
+la page du bundle le signale à côté de chaque élément. Une fois obtenu, elle
+propose de télécharger tous ses scénarios d'un geste.
+
+Un PNJ de scénario peut avoir un **pion par défaut**, choisi au backoffice : la
+session le reprend tant que le MJ n'en a pas choisi un autre, « Aucun » compris.
 
 Les prix s'expriment en centimes côté serveur, pour qu'aucun arrondi
 n'intervienne dans l'app. **Il n'y a pas encore de paiement** : le seul prix
