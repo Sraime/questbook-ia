@@ -29,7 +29,7 @@ décidé, le joueur n'a pas à en soupçonner l'existence.
 | [Session](#session) | Une soirée de jeu datée, proposée par le MJ à sa table. |
 | [Scénario](#scénario) | Une aventure écrite par Questbook, qu'on possède et qu'on télécharge. |
 | [Plateau](#plateau) | La carte et les pions d'une session. Le MJ les dispose, la table les regarde. |
-| [Asset](#asset) | Un pion qu'on peut poser sur un plateau. |
+| [Asset](#asset) | Un pion qu'on peut poser sur un plateau, ou la carte qu'on met dessous. |
 | [Boutique](#boutique) | Le catalogue des articles, et ce que les acheter débloque. |
 
 ## Utilisateur
@@ -235,6 +235,14 @@ Son illustration est **embarquée** dans l'app (le Grand Ancien) ou
 **hébergée** par le serveur, pour ceux qu'on ajoute depuis le backoffice sans
 publier de version. Les joueurs voient les deux de la même façon.
 
+**Une carte est un asset aussi**, mais pas un pion : c'est le fond du plateau.
+La grille vierge et le manoir sont offerts à tous ; les autres s'achètent en
+boutique, ajoutées depuis le backoffice avec la nature « Carte ». Une carte
+achetée rejoint le volet « Carte » du tiroir et la section « Cartes » de la
+bibliothèque, jamais un rayon de pions, et le plateau prend ses proportions.
+Une carte reste une carte : sa nature ne bascule pas vers celle d'un pion.
+Comme pour les pions, les joueurs voient la carte du MJ sans l'avoir achetée.
+
 Un asset acheté est **acquis pour de bon**, par le compte et non par
 l'appareil. Un pion posé se souvient de l'article dont il vient, ce qui permet
 un jour de montrer un pion par défaut à qui ne le possède pas, plutôt que de
@@ -253,7 +261,7 @@ dit ce que l'acheter débloque :
 
 | Type | Ce que l'achat donne |
 | --- | --- |
-| **asset** | Un [pion](#asset) de plus dans le tiroir du MJ et la bibliothèque. |
+| **asset** | Un [pion ou une carte](#asset) de plus dans le tiroir du MJ et la bibliothèque. |
 | **scenario** | La possession d'un [scénario](#scénario), qui apparaît alors dans la liste. |
 | **pack** | Un lot. Le type existe, le contenu n'est pas défini : rien ne s'achète encore ainsi. |
 
